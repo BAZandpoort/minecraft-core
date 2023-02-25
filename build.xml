@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+
+<project name="Core" default="Build">
+    <target name="Build">
+        <jar jarfile="E:/Minecraft/Testing/Latest/plugins/${ant.project.name}.jar" basedir="./target/classes/"
+             includes="**/*"/>
+    </target>
+</project>

@@ -1,0 +1,27 @@
+main: ${main.class}
+name: ${project.name}
+version: ${project.version}
+
+description: Core plugin for BA Zandpoort's Minecraft server
+api-version: 1.13
+author: ${author}
+
+website: cedricverlinden.com
+depend: [ ]
+
+# COMMANDS AND PERMISSIONS REGISTRATION
+
+commands:
+  test:
+    description: A simple test command to see if everything is working properly.
+    aliases: [ testing ]
+    permission: core.command.test
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command> [message]"
+
+permissions:
+  core.command.all:
+    description: Allows you to execute all existing commands.
+    default: true
+    children:
+      core.command.test: true
