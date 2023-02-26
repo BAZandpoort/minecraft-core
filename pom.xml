@@ -54,9 +54,9 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0
                 </version> <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
-                <configuration>
-                    <outputDirectory>E:\Minecraft\Testing\Latest\plugins</outputDirectory>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <outputDirectory>E:\Minecraft\Testing\Latest\plugins</outputDirectory>-->
+<!--                </configuration>-->
             </plugin>
 
             <plugin>
