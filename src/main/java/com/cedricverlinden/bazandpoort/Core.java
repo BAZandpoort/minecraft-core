@@ -12,7 +12,7 @@ public class Core extends JavaPlugin {
 
 	private static Core instance;
 
-	private PluginManager pluginManager = Bukkit.getPluginManager();
+	private final PluginManager pluginManager = Bukkit.getPluginManager();
 
 	private static FileManager motd;
 
@@ -26,7 +26,7 @@ public class Core extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		super.onDisable();
+
 	}
 
 	private void loadFiles() {

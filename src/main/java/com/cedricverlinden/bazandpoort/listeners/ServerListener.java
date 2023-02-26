@@ -16,14 +16,9 @@ public class ServerListener implements Listener {
 
 	@EventHandler
 	public void onServerListPing(ServerListPingEvent event) {
-
-		if (Objects.requireNonNull(motd.getString("motd")).isEmpty()) {
-			event.motd(Component.text(ChatColor.translateAlternateColorCodes('&', "")));
-			return;
-		}
+		event.setMaxPlayers(event.getNumPlayers()+1);
 
 		event.motd(Component.text(ChatColor.translateAlternateColorCodes('&',
-				"&r   &7[NIEUW] &2&lHET BAZANDPOORT NETWERK &7[1.19.3]\n" +
-						"&r              &8&m-&7&m-&f De &a#1 &feducatie server! &7&m-&8&m-")));
+				Objects.requireNonNull(motd.getString("motd")))));
 	}
 }
