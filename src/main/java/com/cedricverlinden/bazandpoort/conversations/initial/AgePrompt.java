@@ -1,13 +1,15 @@
 package com.cedricverlinden.bazandpoort.conversations.initial;
 
+import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationContext;
-import org.bukkit.conversations.NumericPrompt;
 import org.bukkit.conversations.Prompt;
+import org.bukkit.conversations.ValidatingPrompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AgePrompt extends NumericPrompt {
+public class AgePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
@@ -20,14 +22,27 @@ public class AgePrompt extends NumericPrompt {
 	}
 
 	@Override
-	protected @Nullable String getInputNotNumericText(@NotNull ConversationContext context, @NotNull String invalidInput) {
-		return Utils.color("&8[&2DIRECTEUR&8] &fHelaas is '" + invalidInput + "' geen getal.");
+	protected boolean isInputValid(@NotNull ConversationContext conversationContext, @NotNull String s) {
+		int age;
+		try {
+			age = Integer.parseInt(s);
+		} catch (NumberFormatException exception) {
+			return false;
+		}
+
+		return (age >= 8 && age <= 18);
 	}
 
 	@Override
-	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable Number input) {
-		context.setSessionData("age", input.intValue());
+	protected @Nullable String getFailedValidationText(@NotNull ConversationContext context, @NotNull String invalidInput) {
+		return Utils.color("&8[&2DIRECTEUR&8] &cHelaas valt '" + invalidInput + "' niet tussen de geldige leeftijdscategorieën");
+	}
+
+	@Override
+	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
+		context.setSessionData("age", Integer.parseInt(input));
 		context.getForWhom().sendRawMessage(Utils.color("&8[&2DIRECTEUR&8] &fDankjewel &a" + context.getSessionData("name") + "&f, als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
+		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> Bukkit.getServer().broadcastMessage(Utils.color(Core.getMessages().getEditableFile().getString("join-message").replace("$player", context.getSessionData("name").toString()))), 20);
 		return END_OF_CONVERSATION;
 	}
 }

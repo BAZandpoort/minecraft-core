@@ -14,6 +14,7 @@ public class Core extends JavaPlugin {
 
 	private final PluginManager pluginManager = Bukkit.getPluginManager();
 
+	private static FileManager messages;
 	private static FileManager motd;
 
 	@Override
@@ -30,6 +31,7 @@ public class Core extends JavaPlugin {
 	}
 
 	private void loadFiles() {
+		messages = new FileManager("messages.yml");
 		motd = new FileManager("features", "motd.yml");
 	}
 
@@ -44,6 +46,10 @@ public class Core extends JavaPlugin {
 
 	public static Core instance() {
 		return instance;
+	}
+
+	public static FileManager getMessages() {
+		return messages;
 	}
 
 	public static FileManager getMotd() {

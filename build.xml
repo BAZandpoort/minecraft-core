@@ -2,7 +2,7 @@
 
 <project name="Core" default="Build">
     <target name="Build">
-        <jar jarfile="E:/Minecraft/Testing/Latest/plugins/${ant.project.name}.jar" basedir="./target/classes/"
+        <jar jarfile="C:/Testing/plugins/${ant.project.name}.jar" basedir="./target/classes/"
              includes="**/*"/>
     </target>
 </project>

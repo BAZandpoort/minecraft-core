@@ -5,6 +5,7 @@ import com.cedricverlinden.bazandpoort.Utils;
 import com.cedricverlinden.bazandpoort.conversations.initial.InitialConvo;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,21 +15,23 @@ import org.bukkit.event.player.PlayerQuitEvent;
 // Using deprecated methods because component does not remove color codes properly in console.
 public class PlayerListener implements Listener {
 
+	YamlConfiguration messages = Core.getMessages().getEditableFile();
+
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', "&f[&a+&f] &a" + player.getName() + " has joined the server!"));
+		event.joinMessage(null);
 
-		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> {
-			player.sendMessage(Utils.color("&8[&cOMROEP&8] &2Hey, welkom op het BA Zandpoort Minecraft netwerk, voor we beginnen hebben wij een aantal vragen voor je."));
-		}, 20);
+		player.sendMessage(Utils.color("&8[&cOMROEP&8] &2Hey, welkom op het BA Zandpoort Minecraft netwerk, voor we beginnen hebben wij een aantal vragen voor je."));
 
-		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> new InitialConvo(player).begin(), 40);
+		if (!(player.isOp())) {
+			Bukkit.getScheduler().runTaskLater(Core.instance(), () -> new InitialConvo(player).begin(), 20);
+		}
 	}
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
-		event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', "&f[&c-&f] &c" + player.getName() + " has left the server!"));
+		event.setQuitMessage(Utils.color(messages.getString("quit-message")).replace("$player", player.getName()));
 	}
 }
