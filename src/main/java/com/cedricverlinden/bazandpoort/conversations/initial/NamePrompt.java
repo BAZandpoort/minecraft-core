@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class NamePrompt extends ValidatingPrompt {
 
-
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
 		return Utils.color("&8[&9SECRETARIAAT&8] &fHoe mogen wij jouw noemen?");
@@ -22,12 +21,22 @@ public class NamePrompt extends ValidatingPrompt {
 
 	@Override
 	protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input) {
-		return (input.charAt(0) >= 'A' && input.charAt(0) <= 'Z') && input.length() >= 2;
-	}
+		if (!(input.charAt(0) >= 'A' && input.charAt(0) <= 'Z')) {
+			context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &cJe naam moet beginnen met een hoofdletter."));
+			return false;
+		}
 
-	@Override
-	protected @Nullable String getFailedValidationText(@NotNull ConversationContext context, @NotNull String invalidInput) {
-		return Utils.color("&8[&9SECRETARIAAT&8] &fVergeet niet dat je naam moet beginnen met een hoofdletter!");
+		if (!(input.length() >= 2)) {
+			context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &cJe naam moet minstens 2 letters bevatten."));
+			return false;
+		}
+
+		if (input.length() > 20) {
+			context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &cJe naam mag een maximum 20 letters bevatten."));
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
