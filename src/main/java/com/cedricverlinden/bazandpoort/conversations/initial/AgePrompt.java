@@ -13,7 +13,7 @@ public class AgePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return Utils.color("&8[&2DIRECTEUR&8] &fHoe jong ben je?");
+		return Utils.color("&8[&9SECRETARIAAT&8] &fHoe oud ben je?");
 	}
 
 	@Override
@@ -27,21 +27,22 @@ public class AgePrompt extends ValidatingPrompt {
 		try {
 			age = Integer.parseInt(s);
 		} catch (NumberFormatException exception) {
+			conversationContext.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &c'" + s + "' is geen nummer. Probeer het opnieuw."));
 			return false;
 		}
 
-		return (age >= 8 && age <= 18);
-	}
+		if (!(age >= 8 && age <= 18)) {
+			conversationContext.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &c'" + s + "' zit niet binnen de leeftijdscategorie. Probeer het opnieuw."));
+			return false;
+		}
 
-	@Override
-	protected @Nullable String getFailedValidationText(@NotNull ConversationContext context, @NotNull String invalidInput) {
-		return Utils.color("&8[&2DIRECTEUR&8] &cHelaas valt '" + invalidInput + "' niet tussen de geldige leeftijdscategorieën");
+		return true;
 	}
 
 	@Override
 	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
 		context.setSessionData("age", Integer.parseInt(input));
-		context.getForWhom().sendRawMessage(Utils.color("&8[&2DIRECTEUR&8] &fDankjewel &a" + context.getSessionData("name") + "&f, als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
+		context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + context.getSessionData("name") + "&f, als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
 		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> Bukkit.getServer().broadcastMessage(Utils.color(Core.getMessages().getEditableFile().getString("join-message").replace("$player", context.getSessionData("name").toString()))), 20);
 		return END_OF_CONVERSATION;
 	}

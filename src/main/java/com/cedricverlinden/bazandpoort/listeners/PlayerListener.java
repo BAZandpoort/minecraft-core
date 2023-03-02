@@ -22,9 +22,8 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		event.joinMessage(null);
 
-		player.sendMessage(Utils.color("&8[&cOMROEP&8] &2Hey, welkom op het BA Zandpoort Minecraft netwerk, voor we beginnen hebben wij een aantal vragen voor je."));
-
 		if (!(player.isOp())) {
+			player.sendMessage(Utils.color("&8[&cOMROEP&8] &2Hey, welkom op het BA Zandpoort Minecraft netwerk, voor we beginnen hebben wij een aantal vragen voor je."));
 			Bukkit.getScheduler().runTaskLater(Core.instance(), () -> new InitialConvo(player).begin(), 20);
 		}
 	}

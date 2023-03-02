@@ -12,7 +12,7 @@ public class NamePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return Utils.color("&8[&2DIRECTEUR&8] &fHoe mogen wij jouw noemen?");
+		return Utils.color("&8[&9SECRETARIAAT&8] &fHoe mogen wij jouw noemen?");
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class NamePrompt extends ValidatingPrompt {
 
 	@Override
 	protected @Nullable String getFailedValidationText(@NotNull ConversationContext context, @NotNull String invalidInput) {
-		return Utils.color("&8[&2DIRECTEUR&8] &fVergeet niet dat je naam moet beginnen met een hoofdletter!");
+		return Utils.color("&8[&9SECRETARIAAT&8] &fVergeet niet dat je naam moet beginnen met een hoofdletter!");
 	}
 
 	@Override
 	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
 		context.setSessionData("name", input);
-		context.getForWhom().sendRawMessage(Utils.color("&8[&2DIRECTEUR&8] &fTop, leuk je te ontmoeten &a" + input + "&f!"));
+		context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &fTop, leuk je te ontmoeten &a" + input + "&f!"));
 		return new AgePrompt();
 	}
 }
