@@ -2,7 +2,7 @@ package com.cedricverlinden.bazandpoort.conversations.initial;
 
 import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.Utils;
-import com.mojang.authlib.GameProfile;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
@@ -10,8 +10,6 @@ import org.bukkit.conversations.ValidatingPrompt;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class AgePrompt extends ValidatingPrompt {
 
@@ -48,7 +46,13 @@ public class AgePrompt extends ValidatingPrompt {
 		context.setSessionData("age", Integer.parseInt(input));
 		context.getForWhom().sendRawMessage(Utils.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + context.getSessionData("name") + "&f, als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
 
-		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> Bukkit.getServer().broadcastMessage(Utils.color(Core.getMessages().getEditableFile().getString("join-message").replace("$player", context.getSessionData("name").toString()))), 20);
+		String name = context.getSessionData("name").toString();
+
+		Player player = (Player) context.getForWhom();
+		player.playerListName(Component.text(name));
+		player.displayName(Component.text(name));
+
+		Bukkit.getScheduler().runTaskLater(Core.instance(), () -> Bukkit.getServer().broadcastMessage(Utils.color(Core.getMessages().getEditableFile().getString("join-message").replace("$player", name))), 20);
 		return END_OF_CONVERSATION;
 	}
 }

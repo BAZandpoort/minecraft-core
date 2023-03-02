@@ -27,7 +27,7 @@ public class Core extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		super.onDisable();
 	}
 
 	private void loadFiles() {
