@@ -18,6 +18,12 @@ commands:
     permission: core.command.test
     permission-message: You do not have the required permissions to execute this command.
     usage: "Usage: /<command> [message]"
+  region:
+    description: Region command
+    aliases: [ regions ]
+    permission: core.command.region
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command>"
 
 permissions:
   core.command.all:
@@ -25,3 +31,4 @@ permissions:
     default: true
     children:
       core.command.test: true
+      core.command.region: true

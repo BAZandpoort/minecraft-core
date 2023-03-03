@@ -1,5 +1,6 @@
 package com.cedricverlinden.bazandpoort;
 
+import com.cedricverlinden.bazandpoort.commands.RegionCommand;
 import com.cedricverlinden.bazandpoort.commands.TestCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
 import com.cedricverlinden.bazandpoort.listeners.ServerListener;
@@ -16,6 +17,7 @@ public class Core extends JavaPlugin {
 
 	private final PluginManager pluginManager = Bukkit.getPluginManager();
 
+	private static FileManager lectures;
 	private static FileManager messages;
 	private static FileManager motd;
 
@@ -34,12 +36,14 @@ public class Core extends JavaPlugin {
 	}
 
 	private void loadFiles() {
+		lectures = new FileManager("data", "lectures.yml");
 		messages = new FileManager("messages.yml");
 		motd = new FileManager("features", "motd.yml");
 	}
 
 	private void loadCommands() {
 		getCommand("test").setExecutor(new TestCommand());
+		getCommand("region").setExecutor(new RegionCommand());
 	}
 
 	private void loadListeners() {
@@ -49,6 +53,14 @@ public class Core extends JavaPlugin {
 
 	public static Core instance() {
 		return instance;
+	}
+
+	public static WorldGuard wg() {
+		return worldGuard;
+	}
+
+	public static FileManager getLectures() {
+		return lectures;
 	}
 
 	public static FileManager getMessages() {
