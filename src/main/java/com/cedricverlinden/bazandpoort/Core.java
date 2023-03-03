@@ -4,6 +4,7 @@ import com.cedricverlinden.bazandpoort.commands.TestCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
 import com.cedricverlinden.bazandpoort.listeners.ServerListener;
 import com.cedricverlinden.bazandpoort.managers.FileManager;
+import com.sk89q.worldguard.WorldGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Core extends JavaPlugin {
 
 	private static Core instance;
+	private static WorldGuard worldGuard;
 
 	private final PluginManager pluginManager = Bukkit.getPluginManager();
 
@@ -20,6 +22,7 @@ public class Core extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
+		worldGuard = WorldGuard.getInstance();
 		loadFiles();
 		loadCommands();
 		loadListeners();
