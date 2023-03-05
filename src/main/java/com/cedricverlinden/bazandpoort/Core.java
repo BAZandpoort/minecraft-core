@@ -1,73 +1,74 @@
 package com.cedricverlinden.bazandpoort;
 
-import com.cedricverlinden.bazandpoort.commands.RegionCommand;
-import com.cedricverlinden.bazandpoort.commands.TestCommand;
+import com.cedricverlinden.bazandpoort.commands.admin.RegionCommand;
+import com.cedricverlinden.bazandpoort.commands.player.LectureCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
+import com.cedricverlinden.bazandpoort.listeners.RegionListener;
 import com.cedricverlinden.bazandpoort.listeners.ServerListener;
-import com.cedricverlinden.bazandpoort.managers.FileManager;
-import com.sk89q.worldguard.WorldGuard;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Main plugin class for everything to work
+ */
 public class Core extends JavaPlugin {
 
-	private static Core instance;
-	private static WorldGuard worldGuard;
+	private static Core core;
+	private static Start instance;
 
-	private final PluginManager pluginManager = Bukkit.getPluginManager();
+	private static final PluginManager listenerManager = Bukkit.getPluginManager();
 
-	private static FileManager lectures;
-	private static FileManager messages;
-	private static FileManager motd;
-
+	/**
+	 * Called when starting the plugin
+	 */
 	@Override
 	public void onEnable() {
-		instance = this;
-		worldGuard = WorldGuard.getInstance();
-		loadFiles();
+		core = this;
+		instance = new Start();
+
 		loadCommands();
 		loadListeners();
 	}
 
+	/**
+	 * Called when shutting down the plugin
+	 */
 	@Override
 	public void onDisable() {
-		super.onDisable();
+		new End();
 	}
 
-	private void loadFiles() {
-		lectures = new FileManager("data", "lectures.yml");
-		messages = new FileManager("messages.yml");
-		motd = new FileManager("features", "motd.yml");
-	}
-
+	/**
+	 * Registers all commands through Bukkit's getPluginCommand
+	 */
 	private void loadCommands() {
-		getCommand("test").setExecutor(new TestCommand());
 		getCommand("region").setExecutor(new RegionCommand());
+		getCommand("lecture").setExecutor(new LectureCommand());
 	}
 
+	/**
+	 * Registers all listeners through Bukkit's PluginManager
+	 */
 	private void loadListeners() {
-		pluginManager.registerEvents(new PlayerListener(), this);
-		pluginManager.registerEvents(new ServerListener(), this);
+		listenerManager.registerEvents(new PlayerListener(), Core.core());
+		listenerManager.registerEvents(new RegionListener(), Core.core());
+		listenerManager.registerEvents(new ServerListener(), Core.core());
 	}
 
-	public static Core instance() {
+	/**
+	 *
+	 * @return instance of {@link Core}
+	 */
+	public static Core core() {
+		return core;
+	}
+
+	/**
+	 *
+	 * @return instance of {@link Start}
+	 */
+	public static Start instance() {
 		return instance;
-	}
-
-	public static WorldGuard wg() {
-		return worldGuard;
-	}
-
-	public static FileManager getLectures() {
-		return lectures;
-	}
-
-	public static FileManager getMessages() {
-		return messages;
-	}
-
-	public static FileManager getMotd() {
-		return motd;
 	}
 }

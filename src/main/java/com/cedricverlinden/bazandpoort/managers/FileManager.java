@@ -1,42 +1,46 @@
 package com.cedricverlinden.bazandpoort.managers;
 
 import com.cedricverlinden.bazandpoort.Core;
+import com.cedricverlinden.bazandpoort.utils.ErrorUtil;
+import com.cedricverlinden.bazandpoort.utils.LoggerUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
 
 public class FileManager {
 
-	private final String path;
-	private final String fileName;
-
 	private final File file;
 	private final YamlConfiguration editableFile;
 
-	public FileManager(String path, String fileName) {
-		this.path = path;
-		this.fileName = fileName;
+	private final File dataFolder = Core.core().getDataFolder();
 
-		file = new File(Core.instance().getDataFolder() + File.separator + path.replace("/", File.separator), fileName);
-		file.getParentFile().mkdirs();
+	public FileManager(@NotNull String path, @NotNull String fileName) {
+		file = new File(dataFolder + File.separator + path.replace("/", File.separator), fileName);
+		boolean madeDirs = file.getParentFile().mkdirs();
+
+		if (!(madeDirs)) {
+			LoggerUtils.logInfo("Directory for " + file.getName() + " is already created.");
+		}
 
 		if (!(file.exists())) {
-			Core.instance().saveResource(path.replace("/", File.separator) + File.separator  + fileName, false);
+			Core.core().saveResource(path.replace("/", File.separator) + File.separator  + fileName, false);
 		}
 
 		editableFile = YamlConfiguration.loadConfiguration(file);
 	}
 
-	public FileManager(String fileName) {
-		this.fileName = fileName;
-		this.path = "";
+	public FileManager(@NotNull String fileName) {
+		file = new File(dataFolder, fileName);
+		boolean madeDirs = file.getParentFile().mkdirs();
 
-		file = new File(Core.instance().getDataFolder(), fileName);
-		file.getParentFile().mkdirs();
+		if (!(madeDirs)) {
+			LoggerUtils.logInfo("Directory for " + file.getName() + " is already created.");
+		}
 
 		if (!(file.exists())) {
-			Core.instance().saveResource(fileName, false);
+			Core.core().saveResource(fileName, false);
 		}
 
 		editableFile = YamlConfiguration.loadConfiguration(file);
@@ -50,7 +54,7 @@ public class FileManager {
 		try {
 			editableFile.save(file);
 		} catch (IOException exception) {
-			exception.printStackTrace();
+			ErrorUtil.handleError("&cCould not save " + file.getName(), exception);
 		}
 	}
 }

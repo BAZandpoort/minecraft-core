@@ -12,16 +12,16 @@ depend: [ "WorldGuard" ]
 # COMMANDS AND PERMISSIONS REGISTRATION
 
 commands:
-  test:
-    description: A simple test command to see if everything is working properly.
-    aliases: [ testing ]
-    permission: core.command.test
-    permission-message: You do not have the required permissions to execute this command.
-    usage: "Usage: /<command> [message]"
   region:
     description: Region command
     aliases: [ regions ]
     permission: core.command.region
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command>"
+  lecture:
+    description: Lecture command
+    aliases: [ regions ]
+    permission: core.command.lecture
     permission-message: You do not have the required permissions to execute this command.
     usage: "Usage: /<command>"
 
@@ -30,5 +30,5 @@ permissions:
     description: Allows you to execute all existing commands.
     default: true
     children:
-      core.command.test: true
       core.command.region: true
+      core.command.lecture: true

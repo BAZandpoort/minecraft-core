@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class InitialConvo extends Conversation {
 
 	public InitialConvo(@NotNull Player forWhom) {
-		super(Core.instance(), forWhom, new NamePrompt());
+		super(Core.core(), forWhom, new NamePrompt());
 		setLocalEchoEnabled(false);
 	}
 }
