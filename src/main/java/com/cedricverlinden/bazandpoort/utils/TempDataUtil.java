@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TempDataUtils {
+public class TempDataUtil {
 
 	public static final HashMap<Player, String> region = new HashMap<>();
 	public static final List<Player> lecture = new ArrayList<>();

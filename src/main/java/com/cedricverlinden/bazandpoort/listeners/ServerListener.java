@@ -1,7 +1,7 @@
 package com.cedricverlinden.bazandpoort.listeners;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -17,7 +17,7 @@ public class ServerListener implements Listener {
 		event.setMaxPlayers(event.getNumPlayers()+1);
 
 		String motdMessage = motd.getString("motd");
-		event.motd(Component.text(ChatUtils.color(
+		event.motd(Component.text(ChatUtil.color(
 				(motdMessage == null) ? "&4&l&nNO MOTD SET!\n&4&l&nPLEASE FIX THIS" : motdMessage)));
 	}
 }

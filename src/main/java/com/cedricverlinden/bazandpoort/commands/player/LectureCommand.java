@@ -1,9 +1,9 @@
 package com.cedricverlinden.bazandpoort.commands.player;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import com.cedricverlinden.bazandpoort.conversations.lectures.MathConvo;
-import com.cedricverlinden.bazandpoort.utils.TempDataUtils;
+import com.cedricverlinden.bazandpoort.utils.TempDataUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,31 +22,31 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
 		if (!(sender instanceof Player player)) {
-			sender.sendMessage(ChatUtils.color("&cYou can only use this command in-game."));
+			sender.sendMessage(ChatUtil.color("&cYou can only use this command in-game."));
 			return true;
 		}
 
-		if (!(TempDataUtils.region.containsKey(player))) {
-			player.sendMessage(ChatUtils.color("&cYou have to be in a class to start a lecture."));
+		if (!(TempDataUtil.region.containsKey(player))) {
+			player.sendMessage(ChatUtil.color("&cYou have to be in a class to start a lecture."));
 			return true;
 		}
 
 		if (args.length == 0) {
-			player.sendMessage(ChatUtils.color("&cUsage: /lecture <start, end>"));
+			player.sendMessage(ChatUtil.color("&cUsage: /lecture <start, end>"));
 			return true;
 		}
 
 		String param = args[0].toLowerCase();
 
 		if ("start".equals(param)) {
-			if (TempDataUtils.lecture.contains(player)) {
-				player.sendMessage(ChatUtils.color("&cYou have already started a lecture."));
+			if (TempDataUtil.lecture.contains(player)) {
+				player.sendMessage(ChatUtil.color("&cYou have already started a lecture."));
 				return true;
 			}
 
 			// start conversation
-			TempDataUtils.lecture.add(player);
-			player.sendMessage(ChatUtils.color("&aStarting the Math lecture..."));
+			TempDataUtil.lecture.add(player);
+			player.sendMessage(ChatUtil.color("&aStarting the Math lecture..."));
 
 			Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
 				new MathConvo(player).begin();
@@ -55,18 +55,18 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 		}
 
 		if ("end".equals(param)) {
-			if (!(TempDataUtils.lecture.contains(player))) {
-				player.sendMessage(ChatUtils.color("&cYou haven't started any lecture yet."));
+			if (!(TempDataUtil.lecture.contains(player))) {
+				player.sendMessage(ChatUtil.color("&cYou haven't started any lecture yet."));
 				return true;
 			}
 
 			// end conversation
-			TempDataUtils.lecture.remove(player);
-			player.sendMessage(ChatUtils.color("&cEnding the lecture..."));
+			TempDataUtil.lecture.remove(player);
+			player.sendMessage(ChatUtil.color("&cEnding the lecture..."));
 			return true;
 		}
 
-		player.sendMessage(ChatUtils.color("&cUsage: /lecture <start, end>"));
+		player.sendMessage(ChatUtil.color("&cUsage: /lecture <start, end>"));
 		return true;
 	}
 

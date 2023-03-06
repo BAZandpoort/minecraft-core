@@ -1,8 +1,8 @@
 package com.cedricverlinden.bazandpoort.listeners;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
-import com.cedricverlinden.bazandpoort.utils.TempDataUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
+import com.cedricverlinden.bazandpoort.utils.TempDataUtil;
 import com.sk89q.worldguard.WorldGuard;
 import de.netzkronehd.wgregionevents.events.RegionEnteredEvent;
 import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
@@ -46,7 +46,7 @@ public class RegionListener implements Listener {
 		}
 
 		if (lectureName == null) {
-			player.sendMessage(ChatUtils.color("This region is not used by any lecture."));
+			player.sendMessage(ChatUtil.color("This region is not used by any lecture."));
 			return;
 		}
 
@@ -75,11 +75,11 @@ public class RegionListener implements Listener {
 //			throw new RuntimeException(e);
 //		}
 
-		TempDataUtils.region.put(player, event.getRegion().getId());
-		player.sendMessage(ChatUtils.color("&aYou have entered the &2" + lectureName + " &aclass."));
+		TempDataUtil.region.put(player, event.getRegion().getId());
+		player.sendMessage(ChatUtil.color("&aYou have entered the &2" + lectureName + " &aclass."));
 
 		Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
-			player.sendMessage(ChatUtils.color("Type this to start..."));
+			player.sendMessage(ChatUtil.color("Type this to start..."));
 		}, 20);
 	}
 
@@ -105,7 +105,7 @@ public class RegionListener implements Listener {
 		}
 
 		if (lectureName == null) {
-			player.sendMessage(ChatUtils.color("This region is not used by any lecture."));
+			player.sendMessage(ChatUtil.color("This region is not used by any lecture."));
 			return;
 		}
 
@@ -133,6 +133,6 @@ public class RegionListener implements Listener {
 //			throw new RuntimeException(e);
 //		}
 
-		TempDataUtils.region.remove(player);
+		TempDataUtil.region.remove(player);
 	}
 }

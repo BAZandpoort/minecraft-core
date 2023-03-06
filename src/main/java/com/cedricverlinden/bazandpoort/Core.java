@@ -1,5 +1,6 @@
 package com.cedricverlinden.bazandpoort;
 
+import com.cedricverlinden.bazandpoort.commands.admin.PlayerManagerCommand;
 import com.cedricverlinden.bazandpoort.commands.admin.RegionCommand;
 import com.cedricverlinden.bazandpoort.commands.player.LectureCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
@@ -45,6 +46,7 @@ public class Core extends JavaPlugin {
 	private void loadCommands() {
 		getCommand("region").setExecutor(new RegionCommand());
 		getCommand("lecture").setExecutor(new LectureCommand());
+		getCommand("playermanager").setExecutor(new PlayerManagerCommand());
 	}
 
 	/**

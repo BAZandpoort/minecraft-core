@@ -1,6 +1,6 @@
 package com.cedricverlinden.bazandpoort.conversations.lectures;
 
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.ValidatingPrompt;
@@ -11,8 +11,8 @@ public class ReadyConvo extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		context.getForWhom().sendRawMessage(ChatUtils.color("&8[&5WISKUNDE LEERKRACHT&8] &fHey &a{name}&f, ben je klaar om te oefenen?"));
-		return ChatUtils.color("&7&o(antwoord met \"Ja\" of \"Nee\")");
+		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&5WISKUNDE LEERKRACHT&8] &fHey &a{name}&f, ben je klaar om te oefenen?"));
+		return ChatUtil.color("&7&o(antwoord met \"Ja\" of \"Nee\")");
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class ReadyConvo extends ValidatingPrompt {
 			}
 
 			case "nee" -> {
-				context.getForWhom().sendRawMessage(ChatUtils.color("&8[&5WISKUNDE LEERKRACHT&8] &fJe hebt de oefening beëindig."));
+				context.getForWhom().sendRawMessage(ChatUtil.color("&8[&5WISKUNDE LEERKRACHT&8] &fJe hebt de oefening beëindig."));
 				return END_OF_CONVERSATION;
 			}
 		};

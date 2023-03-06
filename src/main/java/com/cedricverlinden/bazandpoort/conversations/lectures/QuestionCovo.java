@@ -1,7 +1,7 @@
 package com.cedricverlinden.bazandpoort.conversations.lectures;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
@@ -13,7 +13,7 @@ public class QuestionCovo extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return ChatUtils.color("&8[&5OEFENING&8] &a5 + 5 = ?");
+		return ChatUtil.color("&8[&5OEFENING&8] &a5 + 5 = ?");
 	}
 
 	@Override
@@ -23,9 +23,9 @@ public class QuestionCovo extends ValidatingPrompt {
 
 	@Override
 	protected @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input) {
-		context.getForWhom().sendRawMessage(ChatUtils.color("&8[&5WISKUDE LEERKRACHT&8] &fGefeliciteerd &a{name}&f, je hebt de vraag &ajuist&f!"));
+		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&5WISKUDE LEERKRACHT&8] &fGefeliciteerd &a{name}&f, je hebt de vraag &ajuist&f!"));
 		Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
-			context.getForWhom().sendRawMessage(ChatUtils.color("&7&oDat was het voor nu, er zullen binnenkort meer vragen worden toegevoegd."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&7&oDat was het voor nu, er zullen binnenkort meer vragen worden toegevoegd."));
 		}, 20);
 		return END_OF_CONVERSATION;
 	}

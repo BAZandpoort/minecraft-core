@@ -37,7 +37,7 @@ public class ErrorUtil {
 	 * @param exception {@link Exception} to log to file
 	 */
 	public static void handleError(@NotNull String message, @NotNull Exception exception) {
-		LoggerUtils.logError(message);
+		LoggerUtil.logError(message);
 
 		File dataFolder = Core.core().getDataFolder();
 		Calendar calendar = Calendar.getInstance();

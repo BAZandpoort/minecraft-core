@@ -24,6 +24,12 @@ commands:
     permission: core.command.lecture
     permission-message: You do not have the required permissions to execute this command.
     usage: "Usage: /<command>"
+  playermanager:
+    description: Player manager command
+    aliases: [ pm ]
+    permission: core.command.playermanager
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command>"
 
 permissions:
   core.command.all:
@@ -32,3 +38,4 @@ permissions:
     children:
       core.command.region: true
       core.command.lecture: true
+      core.command.playermanager: true
