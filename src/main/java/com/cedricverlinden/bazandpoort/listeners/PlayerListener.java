@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 // Using deprecated setQuitMessage method because component does not remove color codes properly in console.
 public class PlayerListener implements Listener {
 
-	PlayerManager playerManager = Core.instance().playerManager();
+	PlayerManager playerManager;
 	YamlConfiguration messages = Core.instance().getMessages().getEditableFile();
 
 	@EventHandler
@@ -23,7 +23,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		event.joinMessage(null);
 
-		if (!(player.isOp() && playerManager.isPlayer(player))) {
+		if (!(player.isOp()) && (PlayerManager.getPlayer(player) == null)) {
 			player.sendMessage(ChatUtil.color("&8[&cOMROEP&8] &2Hey, welkom op het BA Zandpoort Minecraft netwerk, " +
 					"voor we beginnen hebben wij een aantal vragen voor je."));
 
@@ -35,7 +35,13 @@ public class PlayerListener implements Listener {
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 
-		String customName = playerManager.getCustomPlayer(player).getCustomName();
+		playerManager = PlayerManager.getPlayer(player);
+		if (playerManager == null) {
+			event.quitMessage(null);
+			return;
+		}
+
+		String customName = playerManager.getCustomName();
 		String quitMessage = messages.getString("quit-message");
 		event.setQuitMessage(ChatUtil.color((quitMessage == null) ? "" : quitMessage)
 				.replace("$player", customName));

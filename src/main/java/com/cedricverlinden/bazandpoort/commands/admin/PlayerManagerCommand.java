@@ -2,7 +2,6 @@ package com.cedricverlinden.bazandpoort.commands.admin;
 
 import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.database.Database;
-import com.cedricverlinden.bazandpoort.managers.CustomPlayer;
 import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import org.bukkit.Bukkit;
@@ -19,10 +18,8 @@ import java.util.List;
 
 public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 
-	private final PlayerManager playerManager = Core.instance().playerManager();
 	private final Database database = Core.instance().database();
-	// playermanager <playerName/resetall> [info, set, reset] [name, age] [customName, age]
-
+	
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 		if (!(sender instanceof Player player)) {
@@ -30,7 +27,6 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 			return true;
 		}
 
-		CustomPlayer customPlayer = playerManager.getCustomPlayer(player);
 		String usage = "&cUsage: /playermanager <playerName, resetall> [info, set, reset] [customName, age]";
 
 		if (args.length == 0) {
@@ -39,7 +35,8 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 		}
 
 		if (args[0].equalsIgnoreCase("resetall")) {
-			database.resetPlayers();
+			database.resetAll();
+			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccessfully reset all player data."));
 			return true;
 		}
 
@@ -49,25 +46,41 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 			return true;
 		}
 
+		PlayerManager playerManager = PlayerManager.getPlayer(player);
+		if (playerManager == null) {
+			player.sendMessage(ChatUtil.color("&cThis player does not have a profile created yet."));
+			return true;
+		}
+
+		if (args.length == 1) {
+			player.sendMessage(ChatUtil.color(usage));
+			return true;
+		}
+
 		if (args[1].equalsIgnoreCase("info")) {
 			player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
-			player.sendMessage(ChatUtil.color("&2Player information for &a" + target.getName()));
+			player.sendMessage(ChatUtil.color("&2Player information for &a" + playerManager.getPlayerName()));
 			player.sendMessage(ChatUtil.color("&r"));
-			player.sendMessage(ChatUtil.color("&fPlayer name: &a" + target.getName()));
-			player.sendMessage(ChatUtil.color("&fCustom name: &a" + customPlayer.getCustomName()));
-			player.sendMessage(ChatUtil.color("&fAge: &a" + customPlayer.getAge()));
+			player.sendMessage(ChatUtil.color("&fPlayer name: &a" + playerManager.getPlayerName()));
+			player.sendMessage(ChatUtil.color("&fCustom name: &a" + playerManager.getCustomName()));
+			player.sendMessage(ChatUtil.color("&fAge: &a" + playerManager.getAge()));
 			player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
 			return true;
 		}
 
 		if (args[1].equalsIgnoreCase("set") && args.length == 4) {
 			if (args[2].equalsIgnoreCase("name")) {
-				customPlayer.setCustomName(target, args[3]);
+				String oldName = playerManager.getCustomName();
+				playerManager.setCustomName(args[3]);
+				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aUpdated name for &2" + target.getName() +
+						"&a (" + oldName + ") to &2" + playerManager.getCustomName() + "&a."));
 				return true;
 			}
 
 			if (args[2].equalsIgnoreCase("age")) {
-				customPlayer.setAge(Integer.parseInt(args[3]));
+				playerManager.setAge(Integer.parseInt(args[3]));
+				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aUpdated age for &2" + target.getName() +
+						"&a (" + playerManager.getCustomName() + ") to &2" + playerManager.getAge() + "."));
 				return true;
 			}
 
@@ -76,7 +89,8 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 		}
 
 		if (args[1].equalsIgnoreCase("reset")) {
-			database.resetPlayer(target);
+			playerManager.resetPlayer();
+			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccessfully removed all player data."));
 			return true;
 		}
 

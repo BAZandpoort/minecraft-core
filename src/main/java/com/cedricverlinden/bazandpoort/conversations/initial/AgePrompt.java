@@ -1,7 +1,7 @@
 package com.cedricverlinden.bazandpoort.conversations.initial;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.managers.CustomPlayer;
+import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -46,19 +46,18 @@ public class AgePrompt extends ValidatingPrompt {
 	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
 		Player player = (Player) context.getForWhom();
 
-		String name = context.getSessionData("name").toString();
+		String customName = context.getSessionData("name").toString();
 		int age = (!(input == null)) ? Integer.parseInt(input) : -1;
 
-		CustomPlayer customPlayer = new CustomPlayer(player.getName(), name, age);
-		Core.instance().playerManager().addPlayer(player, customPlayer);
+		new PlayerManager(player, customName, age);
 
-		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + name + "&f, " +
+		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + customName + "&f, " +
 				"als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
 
-		player.playerListName(Component.text(name));
-		player.displayName(Component.text(name));
+		player.playerListName(Component.text(customName));
+		player.displayName(Component.text(customName));
 
-		Bukkit.getScheduler().runTaskLater(Core.core(), () -> Bukkit.getServer().broadcastMessage(ChatUtil.color(Core.instance().getMessages().getEditableFile().getString("join-message").replace("$player", name))), 20);
+		Bukkit.getScheduler().runTaskLater(Core.core(), () -> Bukkit.getServer().broadcastMessage(ChatUtil.color(Core.instance().getMessages().getEditableFile().getString("join-message").replace("$player", customName))), 20);
 		return END_OF_CONVERSATION;
 	}
 }

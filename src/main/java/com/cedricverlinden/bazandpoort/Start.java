@@ -2,7 +2,6 @@ package com.cedricverlinden.bazandpoort;
 
 import com.cedricverlinden.bazandpoort.database.Database;
 import com.cedricverlinden.bazandpoort.managers.FileManager;
-import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.LoggerUtil;
 import com.sk89q.worldguard.WorldGuard;
 import org.bukkit.Bukkit;
@@ -16,7 +15,6 @@ public class Start {
 	// instance
 	private Start instance;
 	private final Database database;
-	private PlayerManager playerManager;
 
 	// files
 	private FileManager messages;
@@ -36,7 +34,6 @@ public class Start {
 		LoggerUtil.log("&8&m----------------------------------------");
 		LoggerUtil.log("&6Initializing the plugin...");
 		database = new Database();
-		playerManager = new PlayerManager();
 		loadFiles();
 		loadApis();
 		LoggerUtil.log("&a&lSuccessfully started the plugin!");
@@ -75,14 +72,6 @@ public class Start {
 	 */
 	public Database database() {
 		return database;
-	}
-
-	/**
-	 *
-	 * @return instance of {@link PlayerManager}
-	 */
-	public PlayerManager playerManager() {
-		return playerManager;
 	}
 
 	/**
