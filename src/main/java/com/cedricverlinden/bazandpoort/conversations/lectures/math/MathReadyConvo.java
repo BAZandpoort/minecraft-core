@@ -7,7 +7,7 @@ import org.bukkit.conversations.ValidatingPrompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ReadyConvo extends ValidatingPrompt {
+public class MathReadyConvo extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
@@ -30,7 +30,7 @@ public class ReadyConvo extends ValidatingPrompt {
 	protected @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input) {
 		switch (input) {
 			case "ja" -> {
-				return new QuestionCovo();
+				return new MathQuestionConvo();
 			}
 
 			case "nee" -> {

@@ -1,10 +1,9 @@
 package com.cedricverlinden.bazandpoort.commands.player;
 
-import com.cedricverlinden.bazandpoort.Core;
+import com.cedricverlinden.bazandpoort.conversations.lectures.computerscience.ComputerScienceConvo;
+import com.cedricverlinden.bazandpoort.conversations.lectures.math.MathConvo;
 import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ChatUtil;
-import com.cedricverlinden.bazandpoort.conversations.lectures.MathConvo;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -54,13 +53,14 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 				return true;
 			}
 
-			// start conversation
-			playerManager.setCurrentLecture("Math");
-			player.sendMessage(ChatUtil.color("&aStarting the Math lecture..."));
+			switch (playerManager.getCurrentRegion()) {
+				case "economy" -> player.sendMessage(ChatUtil.color("ECONOMY -> WIP"));
+				case "computerscience" -> new ComputerScienceConvo(player).begin();
+				case "science" -> player.sendMessage(ChatUtil.color("SCIENCE -> WIP"));
+				case "math" -> new MathConvo(player).begin();
+				default -> player.sendMessage(ChatUtil.color("You have to be in a class to start a lecture."));
+			}
 
-			Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
-				new MathConvo(player).begin();
-			}, 20);
 			return true;
 		}
 

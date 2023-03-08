@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class MathConvo extends Conversation {
 
 	public MathConvo(@NotNull Player forWhom) {
-		super(Core.core(), forWhom, new ReadyConvo());
+		super(Core.core(), forWhom, new MathReadyConvo());
 		setLocalEchoEnabled(false);
 	}
 }
