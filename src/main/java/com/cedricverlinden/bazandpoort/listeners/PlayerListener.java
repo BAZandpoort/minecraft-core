@@ -28,7 +28,11 @@ public class PlayerListener implements Listener {
 					"voor we beginnen hebben wij een aantal vragen voor je."));
 
 			Bukkit.getScheduler().runTaskLater(Core.core(), () -> new InitialConvo(player).begin(), 20);
+			return;
 		}
+
+		playerManager = PlayerManager.getPlayer(player);
+		event.setJoinMessage(ChatUtil.color(messages.getString("join-message").replace("$player", playerManager.getCustomName())));
 	}
 
 	@EventHandler
@@ -40,6 +44,12 @@ public class PlayerListener implements Listener {
 			event.quitMessage(null);
 			return;
 		}
+
+		Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
+			if (!player.isOnline()) {
+				playerManager.resetPlayer();
+			}
+		}, 300 * 20L);
 
 		String customName = playerManager.getCustomName();
 		String quitMessage = messages.getString("quit-message");

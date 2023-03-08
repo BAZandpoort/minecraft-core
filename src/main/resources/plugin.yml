@@ -32,10 +32,21 @@ commands:
     usage: "Usage: /<command>"
 
 permissions:
-  core.command.all:
-    description: Allows you to execute all existing commands.
+  core.command.player.all:
+    description: Allows you to execute all existing player commands.
     default: true
     children:
-      core.command.region: true
       core.command.lecture: true
+  core.command.admin.all:
+    description: Allows you to execute all existing admin commands.
+    default: false
+    children:
+      core.command.region: true
+      core.command.playermanager: true
+  core.command.all:
+    description: Allows you to execute all existing commands.
+    default: false
+    children:
+      core.command.lecture: true
+      core.command.region: true
       core.command.playermanager: true

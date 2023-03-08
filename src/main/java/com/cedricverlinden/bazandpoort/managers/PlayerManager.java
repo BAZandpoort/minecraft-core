@@ -32,8 +32,8 @@ public class PlayerManager {
 		this.customName = customName;
 		this.age = age;
 
-		this.currentRegion = "";
-		this.currentLecture = "";
+		this.currentRegion = "Hallways";
+		this.currentLecture = "Exploring";
 		ResultSet resultSet = getPlayerData();
 
 		try {
@@ -132,7 +132,7 @@ public class PlayerManager {
 
 		String sql = "UPDATE players SET currentregion=? WHERE playername=?;";
 		try (PreparedStatement statement = database.run(sql)) {
-			statement.setString(1, currentRegion);
+			statement.setString(1, (currentRegion.equals("NULL")) ? "Hallways" : currentRegion);
 			statement.setString(2, playerName);
 			statement.executeUpdate();
 		} catch (SQLException exception) {

@@ -1,7 +1,7 @@
 package com.cedricverlinden.bazandpoort;
 
 import com.cedricverlinden.bazandpoort.commands.admin.PlayerManagerCommand;
-import com.cedricverlinden.bazandpoort.commands.admin.RegionCommand;
+import com.cedricverlinden.bazandpoort.commands.admin.RegionManagerCommand;
 import com.cedricverlinden.bazandpoort.commands.player.LectureCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
 import com.cedricverlinden.bazandpoort.listeners.RegionListener;
@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Main plugin class for everything to work
  */
 public class Core extends JavaPlugin {
+
+	// TODO: Add questions for every lecture, add existing players to local data, config getters for easy access, more commands (?)
 
 	private static Core core;
 	private static Start instance;
@@ -44,7 +46,7 @@ public class Core extends JavaPlugin {
 	 * Registers all commands through Bukkit's getPluginCommand
 	 */
 	private void loadCommands() {
-		getCommand("region").setExecutor(new RegionCommand());
+		getCommand("region").setExecutor(new RegionManagerCommand());
 		getCommand("lecture").setExecutor(new LectureCommand());
 		getCommand("playermanager").setExecutor(new PlayerManagerCommand());
 	}

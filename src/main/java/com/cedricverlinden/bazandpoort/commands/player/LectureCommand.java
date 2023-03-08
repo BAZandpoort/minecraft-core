@@ -1,9 +1,9 @@
 package com.cedricverlinden.bazandpoort.commands.player;
 
 import com.cedricverlinden.bazandpoort.Core;
+import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import com.cedricverlinden.bazandpoort.conversations.lectures.MathConvo;
-import com.cedricverlinden.bazandpoort.utils.TempDataUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +18,8 @@ import java.util.List;
 
 public class LectureCommand implements CommandExecutor, TabCompleter {
 
+	PlayerManager playerManager;
+
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -26,7 +28,15 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 			return true;
 		}
 
-		if (!(TempDataUtil.region.containsKey(player))) {
+		playerManager = PlayerManager.getPlayer(player);
+
+		if (playerManager == null) {
+			player.sendMessage(ChatUtil.color((player.isOp() ? "You shouldn't be able to use this command anyway.": "You first have to register.")));
+			return true;
+		}
+
+
+		if (playerManager.getCurrentRegion().equals("Hallways")) {
 			player.sendMessage(ChatUtil.color("&cYou have to be in a class to start a lecture."));
 			return true;
 		}
@@ -39,13 +49,13 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 		String param = args[0].toLowerCase();
 
 		if ("start".equals(param)) {
-			if (TempDataUtil.lecture.contains(player)) {
+			if (!(playerManager.getCurrentLecture().equals("Exploring"))) {
 				player.sendMessage(ChatUtil.color("&cYou have already started a lecture."));
 				return true;
 			}
 
 			// start conversation
-			TempDataUtil.lecture.add(player);
+			playerManager.setCurrentLecture("Math");
 			player.sendMessage(ChatUtil.color("&aStarting the Math lecture..."));
 
 			Bukkit.getScheduler().runTaskLater(Core.core(), () -> {
@@ -55,13 +65,13 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 		}
 
 		if ("end".equals(param)) {
-			if (!(TempDataUtil.lecture.contains(player))) {
+			if (playerManager.getCurrentLecture().equals("Hallways")) {
 				player.sendMessage(ChatUtil.color("&cYou haven't started any lecture yet."));
 				return true;
 			}
 
 			// end conversation
-			TempDataUtil.lecture.remove(player);
+			playerManager.setCurrentLecture("Hallways");
 			player.sendMessage(ChatUtil.color("&cEnding the lecture..."));
 			return true;
 		}

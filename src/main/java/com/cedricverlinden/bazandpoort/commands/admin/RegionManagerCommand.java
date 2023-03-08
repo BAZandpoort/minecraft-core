@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class RegionCommand implements CommandExecutor, TabCompleter {
+public class RegionManagerCommand implements CommandExecutor, TabCompleter {
 
     WorldGuard wg = Core.instance().getWorldGuard();
     RegionContainer container = wg.getPlatform().getRegionContainer();
@@ -34,7 +34,7 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 0) {
-            player.sendMessage(ChatUtil.color("&cUsage: /region <add, list> [region] [lecture]"));
+            player.sendMessage(ChatUtil.color("&cUsage: /regionmanager <add, list> [region] [lecture]"));
             return true;
         }
 
@@ -88,7 +88,7 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
 
         if (args[0].equals("add")) {
             if (args.length <= 2) {
-                player.sendMessage(ChatUtil.color("&cUsage: /region add <region> <lecture>"));
+                player.sendMessage(ChatUtil.color("&cUsage: /regionmanager add <region> <lecture>"));
                 return true;
             }
 
@@ -124,7 +124,7 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        player.sendMessage(ChatUtil.color("&cUsage: /region <add, list> [region] [lecture]"));
+        player.sendMessage(ChatUtil.color("&cUsage: /regionmanager <add, list> [region] [lecture]"));
         return true;
     }
 
