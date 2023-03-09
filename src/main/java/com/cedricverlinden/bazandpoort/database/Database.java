@@ -18,11 +18,11 @@ public class Database {
 	public Database() {
 		try {
 			String HOST = "lin-17544-10111-mysql-primary.servers.linodedb.net"; // 127.0.0.1
-			String DATABASE = "bazandpoort"; // minecraft
-			String USERNAME = "linroot"; // root
-			String PASSWORD = "2l395YaLc8l!bqLy"; // Fruitsla!123
+			String DATABASE = "minecraft"; // minecraft
+			String USERNAME = "root"; // root
+			String PASSWORD = "Fruitsla!123"; // Fruitsla!123
 			connection = DriverManager.getConnection(
-					"jdbc:mysql://" + HOST + ":3306/" + DATABASE + "?useSSL=true", USERNAME, PASSWORD);
+					"jdbc:mysql://" + HOST + ":3306/" + DATABASE + "?useSSL=false", USERNAME, PASSWORD);
 
 			LoggerUtil.log("Successfully connected to the database.");
 		} catch (SQLException exception) {
