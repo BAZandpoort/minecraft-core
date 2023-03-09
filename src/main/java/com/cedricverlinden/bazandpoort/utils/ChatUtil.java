@@ -3,7 +3,7 @@ package com.cedricverlinden.bazandpoort.utils;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
-public class ChatUtils {
+public class ChatUtil {
 
 	/**
 	 * Turns string into a colorized string

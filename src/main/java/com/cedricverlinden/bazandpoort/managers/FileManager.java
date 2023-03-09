@@ -2,7 +2,7 @@ package com.cedricverlinden.bazandpoort.managers;
 
 import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.utils.ErrorUtil;
-import com.cedricverlinden.bazandpoort.utils.LoggerUtils;
+import com.cedricverlinden.bazandpoort.utils.LoggerUtil;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class FileManager {
 		boolean madeDirs = file.getParentFile().mkdirs();
 
 		if (!(madeDirs)) {
-			LoggerUtils.logInfo("Directory for " + file.getName() + " is already created.");
+			LoggerUtil.logInfo("Directory for " + file.getName() + " is already created.");
 		}
 
 		if (!(file.exists())) {
@@ -36,7 +36,7 @@ public class FileManager {
 		boolean madeDirs = file.getParentFile().mkdirs();
 
 		if (!(madeDirs)) {
-			LoggerUtils.logInfo("Directory for " + file.getName() + " is already created.");
+			LoggerUtil.logInfo("Directory for " + file.getName() + " is already created.");
 		}
 
 		if (!(file.exists())) {

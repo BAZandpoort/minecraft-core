@@ -1,7 +1,7 @@
 package com.cedricverlinden.bazandpoort.commands.admin;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import com.sk89q.worldedit.world.World;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class RegionCommand implements CommandExecutor, TabCompleter {
+public class RegionManagerCommand implements CommandExecutor, TabCompleter {
 
     WorldGuard wg = Core.instance().getWorldGuard();
     RegionContainer container = wg.getPlatform().getRegionContainer();
@@ -29,12 +29,12 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage(ChatUtils.color("&cYou can only use this command in-game."));
+            sender.sendMessage(ChatUtil.color("&cYou can only use this command in-game."));
             return true;
         }
 
         if (args.length == 0) {
-            player.sendMessage(ChatUtils.color("&cUsage: /region <add, list> [region] [lecture]"));
+            player.sendMessage(ChatUtil.color("&cGebruik: /regionmanager <add, list> [region] [lecture]"));
             return true;
         }
 
@@ -44,69 +44,69 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
         ConfigurationSection lecturesSection = data.getConfigurationSection("lectures");
         if (args[0].equals("list")) {
             if (regions == null || regions.getRegions() == null || regions.getRegions().isEmpty()) {
-                player.sendMessage(ChatUtils.color("There are no available regions."));
+                player.sendMessage(ChatUtil.color("Er zijn geen beschikbare regio's."));
                 return true;
             }
 
-            player.sendMessage(ChatUtils.color("&8&m----------------------------------------"));
-            player.sendMessage(ChatUtils.color("&2Available regions:"));
+            player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
+            player.sendMessage(ChatUtil.color("&2Beschikbare regio's:"));
             for (Map.Entry<String, ProtectedRegion> region: regions.getRegions().entrySet()) {
-                player.sendMessage(ChatUtils.color("&8- &7" + region.getValue().getId()));
+                player.sendMessage(ChatUtil.color("&8- &7" + region.getValue().getId()));
             }
 
             if (lecturesSection == null) {
-                player.sendMessage(ChatUtils.color("&8&m----------------------------------------"));
+                player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
                 return true;
             }
 
             Set<String> lectures = lecturesSection.getKeys(false);
 
             player.sendMessage("");
-            player.sendMessage(ChatUtils.color("&2Added regions:"));
+            player.sendMessage(ChatUtil.color("&2Toegevoegde regio's:"));
 
             for (String name : lectures) {
                 String regionName = data.getString("lectures." + name + ".region");
                 name = name.substring(0, 1).toUpperCase() + name.substring(1);
 
                 if (regionName == null || regionName.isEmpty()) {
-                    player.sendMessage(ChatUtils.color("&8- &c" + name + " (none)"));
+                    player.sendMessage(ChatUtil.color("&8- &c" + name + " (geen)"));
                     continue;
                 }
 
                 ProtectedRegion region = regions.getRegion(regionName);
                 if (region == null) {
-                    player.sendMessage(ChatUtils.color("&8- &c" + name + " (not valid)"));
+                    player.sendMessage(ChatUtil.color("&8- &c" + name + " (niet geldig)"));
                     continue;
                 }
 
-                player.sendMessage(ChatUtils.color("&8- &a" + region.getId() + " (" + name + ")"));
+                player.sendMessage(ChatUtil.color("&8- &a" + region.getId() + " (" + name + ")"));
             }
 
-            player.sendMessage(ChatUtils.color("&8&m----------------------------------------"));
+            player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
             return true;
         }
 
         if (args[0].equals("add")) {
             if (args.length <= 2) {
-                player.sendMessage(ChatUtils.color("&cUsage: /region add <region> <lecture>"));
+                player.sendMessage(ChatUtil.color("&cGebruik: /regionmanager add <region> <lecture>"));
                 return true;
             }
 
             String regionName = args[1].toLowerCase();
             String lectureName = args[2].toLowerCase();
             if (regions == null || regions.getRegions() == null || regions.getRegions().isEmpty()) {
-                player.sendMessage(ChatUtils.color("&cThere are no available regions."));
+                player.sendMessage(ChatUtil.color("&cThere are no available regions."));
                 return true;
             }
 
             if (lecturesSection == null) {
-                player.sendMessage(ChatUtils.color("&cThere are no available lectures."));
+                player.sendMessage(ChatUtil.color("&cEr zijn geen beschikbare regio's."));
                 return true;
             }
 
             ProtectedRegion region = regions.getRegion(regionName);
             if (region == null) {
-                player.sendMessage(ChatUtils.color("&cThe region '" + regionName + "' does not exist."));
+                player.sendMessage(ChatUtil.color("&cDe regio '" + regionName + "' bestaat niet."));
                 return true;
             }
 
@@ -120,11 +120,11 @@ public class RegionCommand implements CommandExecutor, TabCompleter {
 
             data.set("lectures." + lectureName + ".region", regionName);
             Core.instance().getLectures().save();
-            player.sendMessage(ChatUtils.color("&aSuccessfully added '&2" + regionName + "&a' as region to the &2" + lectureName + " &alecture."));
+            player.sendMessage(ChatUtil.color("&2'" + regionName + "' &asuccesvol toegevoegd als regio aan de &2" + lectureName + " &aklas."));
             return true;
         }
 
-        player.sendMessage(ChatUtils.color("&cUsage: /region <add, list> [region] [lecture]"));
+        player.sendMessage(ChatUtil.color("&cGebruik: /regionmanager <add, list> [region] [lecture]"));
         return true;
     }
 

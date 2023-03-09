@@ -2,14 +2,14 @@ package com.cedricverlinden.bazandpoort.utils;
 
 import org.bukkit.Bukkit;
 
-public class LoggerUtils {
+public class LoggerUtil {
 
 	/**
 	 *
 	 * @param message message to log to console
 	 */
 	public static void log(String message) {
-		Bukkit.getConsoleSender().sendMessage(ChatUtils.color(message));
+		Bukkit.getConsoleSender().sendMessage(ChatUtil.color(message));
 	}
 
 	/**

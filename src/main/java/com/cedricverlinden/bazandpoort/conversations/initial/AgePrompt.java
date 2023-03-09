@@ -1,8 +1,8 @@
 package com.cedricverlinden.bazandpoort.conversations.initial;
 
 import com.cedricverlinden.bazandpoort.Core;
-import com.cedricverlinden.bazandpoort.managers.CustomPlayer;
-import com.cedricverlinden.bazandpoort.utils.ChatUtils;
+import com.cedricverlinden.bazandpoort.managers.PlayerManager;
+import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.ConversationContext;
@@ -16,7 +16,7 @@ public class AgePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return ChatUtils.color("&8[&9SECRETARIAAT&8] &fHoe oud ben je?");
+		return ChatUtil.color("&9&lM. Seymons: &fHoe oud ben je?");
 	}
 
 	@Override
@@ -30,12 +30,12 @@ public class AgePrompt extends ValidatingPrompt {
 		try {
 			age = Integer.parseInt(s);
 		} catch (NumberFormatException exception) {
-			context.getForWhom().sendRawMessage(ChatUtils.color("&8[&9SECRETARIAAT&8] &c'" + s + "' is geen nummer. Probeer het opnieuw."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: '" + s + "' is geen nummer. Probeer het opnieuw."));
 			return false;
 		}
 
 		if (!(age >= 8 && age <= 18)) {
-			context.getForWhom().sendRawMessage(ChatUtils.color("&8[&9SECRETARIAAT&8] &c'" + s + "' zit niet binnen de leeftijdscategorie. Probeer het opnieuw."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &c'" + s + "' zit niet binnen de leeftijdscategorie. Probeer het opnieuw."));
 			return false;
 		}
 
@@ -46,19 +46,18 @@ public class AgePrompt extends ValidatingPrompt {
 	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
 		Player player = (Player) context.getForWhom();
 
-		String name = context.getSessionData("name").toString();
+		String customName = context.getSessionData("name").toString();
 		int age = (!(input == null)) ? Integer.parseInt(input) : -1;
 
-		CustomPlayer customPlayer = new CustomPlayer(player.getName(), name, age);
-		Core.instance().playerManager().addCustomPlayer(name, customPlayer);
+		new PlayerManager(player, customName, age);
 
-		context.getForWhom().sendRawMessage(ChatUtils.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + name + "&f, " +
-				"als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
+		context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &fDankjewel &a" + customName + "&f, " +
+				"als ik het goed heb gelezen ben je &a" + input + " jaar &foud."));
 
-		player.playerListName(Component.text(name));
-		player.displayName(Component.text(name));
+		player.playerListName(Component.text(customName + " | Leeftijd: " + age + "jr."));
+		player.displayName(Component.text(customName));
 
-		Bukkit.getScheduler().runTaskLater(Core.core(), () -> Bukkit.getServer().broadcastMessage(ChatUtils.color(Core.instance().getMessages().getEditableFile().getString("join-message").replace("$player", name))), 20);
+		Bukkit.getScheduler().runTaskLater(Core.core(), () -> Bukkit.getServer().broadcastMessage(ChatUtil.color(Core.instance().getMessages().getEditableFile().getString("join-message").replace("$player", customName))), 20);
 		return END_OF_CONVERSATION;
 	}
 }
