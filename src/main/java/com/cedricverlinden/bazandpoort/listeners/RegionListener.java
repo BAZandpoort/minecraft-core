@@ -2,7 +2,6 @@ package com.cedricverlinden.bazandpoort.listeners;
 
 import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.managers.PlayerManager;
-import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import de.netzkronehd.wgregionevents.events.RegionEnteredEvent;
 import de.netzkronehd.wgregionevents.events.RegionLeftEvent;
 import org.bukkit.configuration.ConfigurationSection;
@@ -44,12 +43,10 @@ public class RegionListener implements Listener {
 		}
 
 		if (lectureName == null) {
-			player.sendMessage(ChatUtil.color("This region is not used by any lecture."));
 			return;
 		}
 
 		playerManager.setCurrentRegion(event.getRegion().getId());
-		player.sendMessage(ChatUtil.color("&aYou have entered the &2" + lectureName + " &aclass."));
 	}
 
 	@EventHandler
@@ -78,11 +75,9 @@ public class RegionListener implements Listener {
 		}
 
 		if (lectureName == null) {
-			player.sendMessage(ChatUtil.color("This region is not used by any lecture."));
 			return;
 		}
 
 		playerManager.setCurrentRegion("NULL");
-		player.sendMessage(ChatUtil.color("&cYou have left the &4" + lectureName + " &cclass."));
 	}
 }

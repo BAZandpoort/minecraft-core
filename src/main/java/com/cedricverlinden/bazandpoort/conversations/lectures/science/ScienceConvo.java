@@ -1,4 +1,4 @@
-package com.cedricverlinden.bazandpoort.conversations.lectures.math;
+package com.cedricverlinden.bazandpoort.conversations.lectures.science;
 
 import com.cedricverlinden.bazandpoort.Core;
 import org.bukkit.conversations.Conversation;
@@ -7,14 +7,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class MathConvo extends Conversation {
+public class ScienceConvo extends Conversation {
 
 	public static final Map<String, String> questions = new HashMap<>() {{
-		put("Bereken 5 x 7", "35");
-		put("Wat is het verschil tussen 32 en 18", "14");
-		put("Als een dozijn gelijk is aan 12 eieren, hoeveel eieren zijn er dan in 3 dozijnen", "36");
-		put("Als een pak koekjes 24 koekjes bevat en je wilt ze verdelen onder 4 vrienden, hoeveel koekjes krijgt elke vriend dan?", "6");
-		put("Wat is de omtrek van een vierkant met zijden van 8 cm? &7&o(Alleen het getal als antwoord)", "32");
+		put("Wat is het orgaan in het menselijk lichaam dat zuurstof in het bloed pompt", "Hart");
+		put("Welke delen van het menselijk lichaam helpen ons te ademen?", "Longen");
+		put("Wat is het proces waarbij een vloeistof verandert in een gas door middel van warmte?", "Verdamping");
+		put("Wat is de term voor de natuurkundige kracht die twee objecten aantrekt naar elkaar toe?", "Zwaartekracht");
+		put("Welke wetenschap houdt zich bezig met het bestuderen van de eigenschappen en interacties van materie en energie?", "Natuurkunde");
 	}};
 
 	public static HashMap<Player, List<String>> playerAnswers = new HashMap<>();
@@ -22,8 +22,8 @@ public class MathConvo extends Conversation {
 	public static int total = 0;
 	public static int score = 0;
 
-	public MathConvo(@NotNull Player forWhom) {
-		super(Core.core(), forWhom, new MathReadyConvo());
+	public ScienceConvo(@NotNull Player forWhom) {
+		super(Core.core(), forWhom, new ScienceReadyConvo());
 		setLocalEchoEnabled(false);
 	}
 

@@ -12,10 +12,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class CSReadyConvo extends ValidatingPrompt {
 
+	PlayerManager playerManager;
+
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
 		String customName = PlayerManager.getPlayer((Player) context.getForWhom()).getCustomName();
-		return ChatUtil.color("&a&lMr. Vermeulen: &fHey " + customName + ", ben je klaar om te oefenen? " +
+		return ChatUtil.color("&a&lM. Vermeulen: &fHey " + customName + ", ben je klaar om te oefenen? " +
 						"&7&o(antwoord met \"Ja\" of \"Nee\")");
 	}
 
@@ -33,12 +35,13 @@ public class CSReadyConvo extends ValidatingPrompt {
 	protected @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @NotNull String input) {
 		switch (input.toLowerCase()) {
 			case "ja" -> {
+				PlayerManager.getPlayer((Player) context.getForWhom()).setCurrentLecture("computerscience");
 				return new CSQuestionOneConvo();
 			}
 
 			case "nee" -> {
 				context.getForWhom().sendRawMessage(ChatUtil.color("&r"));
-				context.getForWhom().sendRawMessage(ChatUtil.color("&a&lMr. Vermeulen: &fSpijtig, tot de volgende keer!"));
+				context.getForWhom().sendRawMessage(ChatUtil.color("&a&lM. Vermeulen: &fSpijtig, tot de volgende keer!"));
 				return END_OF_CONVERSATION;
 			}
 		};

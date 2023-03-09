@@ -27,7 +27,7 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 			return true;
 		}
 
-		String usage = "&cUsage: /playermanager <playerName, resetall> [info, set, reset] [customName, age]";
+		String usage = "&cGebruik: /playermanager <playerName, resetall> [info, set, reset] [customName, age]";
 
 		if (args.length == 0) {
 			player.sendMessage(ChatUtil.color(usage));
@@ -36,19 +36,19 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 
 		if (args[0].equalsIgnoreCase("resetall")) {
 			database.resetAll();
-			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccessfully reset all player data."));
+			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccesvol alle spelersgegevens gereset."));
 			return true;
 		}
 
 		Player target = Bukkit.getPlayer(args[0]);
 		if (target == null) {
-			player.sendMessage(ChatUtil.color("&cThis player either does not exist or is not online."));
+			player.sendMessage(ChatUtil.color("&cDeze speler bestaat niet of is niet online."));
 			return true;
 		}
 
 		PlayerManager playerManager = PlayerManager.getPlayer(player);
 		if (playerManager == null) {
-			player.sendMessage(ChatUtil.color("&cThis player does not have a profile created yet."));
+			player.sendMessage(ChatUtil.color("&cDeze speler heeft nog geen profiel aangemaakt."));
 			return true;
 		}
 
@@ -59,11 +59,11 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 
 		if (args[1].equalsIgnoreCase("info")) {
 			player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
-			player.sendMessage(ChatUtil.color("&2Player information for &a" + playerManager.getPlayerName()));
+			player.sendMessage(ChatUtil.color("&2Spelerinformatie voor &a" + playerManager.getPlayerName()));
 			player.sendMessage(ChatUtil.color("&r"));
-			player.sendMessage(ChatUtil.color("&fPlayer name: &a" + playerManager.getPlayerName()));
-			player.sendMessage(ChatUtil.color("&fCustom name: &a" + playerManager.getCustomName()));
-			player.sendMessage(ChatUtil.color("&fAge: &a" + playerManager.getAge()));
+			player.sendMessage(ChatUtil.color("&fSpeler naam: &a" + playerManager.getPlayerName()));
+			player.sendMessage(ChatUtil.color("&fEigen naam: &a" + playerManager.getCustomName()));
+			player.sendMessage(ChatUtil.color("&fLeeftijd: &a" + playerManager.getAge()));
 			player.sendMessage(ChatUtil.color("&8&m----------------------------------------"));
 			return true;
 		}
@@ -72,15 +72,15 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 			if (args[2].equalsIgnoreCase("name")) {
 				String oldName = playerManager.getCustomName();
 				playerManager.setCustomName(args[3]);
-				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aUpdated name for &2" + target.getName() +
-						"&a (" + oldName + ") to &2" + playerManager.getCustomName() + "&a."));
+				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aGeüpdatete naar voor &2" + target.getName() +
+						"&a (" + oldName + ") naar &2" + playerManager.getCustomName() + "&a."));
 				return true;
 			}
 
 			if (args[2].equalsIgnoreCase("age")) {
 				playerManager.setAge(Integer.parseInt(args[3]));
-				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aUpdated age for &2" + target.getName() +
-						"&a (" + playerManager.getCustomName() + ") to &2" + playerManager.getAge() + "."));
+				player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aGeüpdatete leeftijd voor &2" + target.getName() +
+						"&a (" + playerManager.getCustomName() + ") naar &2" + playerManager.getAge() + "."));
 				return true;
 			}
 
@@ -90,7 +90,7 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 
 		if (args[1].equalsIgnoreCase("reset")) {
 			playerManager.resetPlayer();
-			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccessfully removed all player data."));
+			player.sendMessage(ChatUtil.color("&8[&6&lPM&8] &aSuccesvol alle spelergegevens verwijderd."));
 			return true;
 		}
 

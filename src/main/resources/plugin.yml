@@ -12,16 +12,16 @@ depend: [ "WorldGuard" ]
 # COMMANDS AND PERMISSIONS REGISTRATION
 
 commands:
+  oefening:
+    description: Oefening command
+    aliases: [  ]
+    permission: core.command.oefening
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command>"
   region:
     description: Region command
     aliases: [ regions ]
     permission: core.command.region
-    permission-message: You do not have the required permissions to execute this command.
-    usage: "Usage: /<command>"
-  lecture:
-    description: Lecture command
-    aliases: [ regions ]
-    permission: core.command.lecture
     permission-message: You do not have the required permissions to execute this command.
     usage: "Usage: /<command>"
   playermanager:
@@ -30,23 +30,31 @@ commands:
     permission: core.command.playermanager
     permission-message: You do not have the required permissions to execute this command.
     usage: "Usage: /<command>"
+  vanish:
+    description: Vanish command
+    aliases: [ ]
+    permission: core.command.vanish
+    permission-message: You do not have the required permissions to execute this command.
+    usage: "Usage: /<command>"
 
 permissions:
   core.command.player.all:
     description: Allows you to execute all existing player commands.
     default: true
     children:
-      core.command.lecture: true
+      core.command.oefening: true
   core.command.admin.all:
     description: Allows you to execute all existing admin commands.
     default: false
     children:
       core.command.region: true
       core.command.playermanager: true
+      core.command.vanish: true
   core.command.all:
     description: Allows you to execute all existing commands.
     default: false
     children:
-      core.command.lecture: true
+      core.command.oefening: true
       core.command.region: true
       core.command.playermanager: true
+      core.command.vanish: true

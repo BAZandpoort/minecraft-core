@@ -11,7 +11,7 @@ public class NamePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return ChatUtil.color("&8[&9SECRETARIAAT&8] &fHoe mogen wij jouw noemen?");
+		return ChatUtil.color("&9&lM. Seymons: &fHoe mogen wij jou noemen?");
 	}
 
 	@Override
@@ -22,17 +22,17 @@ public class NamePrompt extends ValidatingPrompt {
 	@Override
 	protected boolean isInputValid(@NotNull ConversationContext context, @NotNull String input) {
 		if (!(input.charAt(0) >= 'A' && input.charAt(0) <= 'Z')) {
-			context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &cJe naam moet beginnen met een hoofdletter."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &cJe naam moet beginnen met een hoofdletter."));
 			return false;
 		}
 
 		if (!(input.length() >= 2)) {
-			context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &cJe naam moet minstens 2 letters bevatten."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &cJe naam moet minstens 2 letters bevatten."));
 			return false;
 		}
 
-		if (input.length() > 20) {
-			context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &cJe naam mag een maximum 20 letters bevatten."));
+		if (input.length() > 16) {
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &cJe naam mag eenmaximum 16 letters bevatten."));
 			return false;
 		}
 
@@ -42,7 +42,7 @@ public class NamePrompt extends ValidatingPrompt {
 	@Override
 	public @Nullable Prompt acceptValidatedInput(@NotNull ConversationContext context, @Nullable String input) {
 		context.setSessionData("name", input);
-		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &fTop, leuk je te ontmoeten &a" + input + "&f!"));
+		context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &fTop, leuk je te ontmoeten &a" + input + "&f!"));
 		return new AgePrompt();
 	}
 }

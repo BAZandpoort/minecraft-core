@@ -1,16 +1,16 @@
 lectures:
-  economie:
-    name: ""
-    region: ""
+  economy:
+    name: "Economie"
+    region: "economy"
 
-  informatica:
-    name: ""
-    region: ""
+  computerscience:
+    name: "Informatica"
+    region: "computerscience"
 
-  wetenschappen:
-    name: ""
-    region: ""
+  sciences:
+    name: "Wetenschappen"
+    region: "sciences"
 
-  wiskunde:
-    name: ""
-    region: ""
+  math:
+    name: "Wiskunde"
+    region: "math"

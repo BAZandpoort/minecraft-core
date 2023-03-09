@@ -16,7 +16,7 @@ public class AgePrompt extends ValidatingPrompt {
 
 	@Override
 	public @NotNull String getPromptText(@NotNull ConversationContext context) {
-		return ChatUtil.color("&8[&9SECRETARIAAT&8] &fHoe oud ben je?");
+		return ChatUtil.color("&9&lM. Seymons: &fHoe oud ben je?");
 	}
 
 	@Override
@@ -30,12 +30,12 @@ public class AgePrompt extends ValidatingPrompt {
 		try {
 			age = Integer.parseInt(s);
 		} catch (NumberFormatException exception) {
-			context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &c'" + s + "' is geen nummer. Probeer het opnieuw."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: '" + s + "' is geen nummer. Probeer het opnieuw."));
 			return false;
 		}
 
 		if (!(age >= 8 && age <= 18)) {
-			context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &c'" + s + "' zit niet binnen de leeftijdscategorie. Probeer het opnieuw."));
+			context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &c'" + s + "' zit niet binnen de leeftijdscategorie. Probeer het opnieuw."));
 			return false;
 		}
 
@@ -51,10 +51,10 @@ public class AgePrompt extends ValidatingPrompt {
 
 		new PlayerManager(player, customName, age);
 
-		context.getForWhom().sendRawMessage(ChatUtil.color("&8[&9SECRETARIAAT&8] &fDankjewel &a" + customName + "&f, " +
-				"als ik het goed heb gelezen ben je &a" + input + " jaar &fjong."));
+		context.getForWhom().sendRawMessage(ChatUtil.color("&9&lM. Seymons: &fDankjewel &a" + customName + "&f, " +
+				"als ik het goed heb gelezen ben je &a" + input + " jaar &foud."));
 
-		player.playerListName(Component.text(customName));
+		player.playerListName(Component.text(customName + " | Leeftijd: " + age + "jr."));
 		player.displayName(Component.text(customName));
 
 		Bukkit.getScheduler().runTaskLater(Core.core(), () -> Bukkit.getServer().broadcastMessage(ChatUtil.color(Core.instance().getMessages().getEditableFile().getString("join-message").replace("$player", customName))), 20);

@@ -3,10 +3,7 @@ package com.cedricverlinden.bazandpoort.database;
 import com.cedricverlinden.bazandpoort.utils.ErrorUtil;
 import com.cedricverlinden.bazandpoort.utils.LoggerUtil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Everything for database management
@@ -20,10 +17,10 @@ public class Database {
 	 */
 	public Database() {
 		try {
-			String HOST = "lin-17544-10111-mysql-primary.servers.linodedb.net";
-			String DATABASE = "bazandpoort";
-			String USERNAME = "linroot";
-			String PASSWORD = "2l395YaLc8l!bqLy";
+			String HOST = "lin-17544-10111-mysql-primary.servers.linodedb.net"; // 127.0.0.1
+			String DATABASE = "bazandpoort"; // minecraft
+			String USERNAME = "linroot"; // root
+			String PASSWORD = "2l395YaLc8l!bqLy"; // Fruitsla!123
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://" + HOST + ":3306/" + DATABASE + "?useSSL=true", USERNAME, PASSWORD);
 
@@ -68,6 +65,41 @@ public class Database {
 		String sql = "TRUNCATE TABLE players";
 
 		try (PreparedStatement statement = run(sql)) {
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public void playerJoin() {
+		String sql = "UPDATE server SET online=online+?;";
+
+		try (PreparedStatement statement = run(sql)) {
+			statement.setInt(1, 1);
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public void playerLeave() {
+		String sql = "UPDATE server SET online=online-?;";
+
+		try (PreparedStatement statement = run(sql)) {
+			statement.setInt(1, 1);
+			statement.executeUpdate();
+		} catch (SQLException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+
+
+	public void resetOnlinePlayers() {
+		String sql = "UPDATE server SET online=?;";
+
+		try (PreparedStatement statement = run(sql)) {
+			statement.setInt(1, 0);
 			statement.executeUpdate();
 		} catch (SQLException exception) {
 			throw new RuntimeException(exception);

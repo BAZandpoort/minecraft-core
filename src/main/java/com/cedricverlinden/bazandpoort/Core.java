@@ -2,15 +2,14 @@ package com.cedricverlinden.bazandpoort;
 
 import com.cedricverlinden.bazandpoort.commands.admin.PlayerManagerCommand;
 import com.cedricverlinden.bazandpoort.commands.admin.RegionManagerCommand;
-import com.cedricverlinden.bazandpoort.commands.player.LectureCommand;
+import com.cedricverlinden.bazandpoort.commands.admin.VanishCommand;
+import com.cedricverlinden.bazandpoort.commands.player.OefeningCommand;
 import com.cedricverlinden.bazandpoort.listeners.PlayerListener;
 import com.cedricverlinden.bazandpoort.listeners.RegionListener;
 import com.cedricverlinden.bazandpoort.listeners.ServerListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
 
 /**
  * Main plugin class for everything to work
@@ -21,8 +20,6 @@ public class Core extends JavaPlugin {
 
 	private static Core core;
 	private static Start instance;
-
-	private ArrayList<String> test = new ArrayList<>();
 
 	private static final PluginManager listenerManager = Bukkit.getPluginManager();
 
@@ -50,9 +47,10 @@ public class Core extends JavaPlugin {
 	 * Registers all commands through Bukkit's getPluginCommand
 	 */
 	private void loadCommands() {
+		getCommand("oefening").setExecutor(new OefeningCommand());
 		getCommand("region").setExecutor(new RegionManagerCommand());
-		getCommand("lecture").setExecutor(new LectureCommand());
 		getCommand("playermanager").setExecutor(new PlayerManagerCommand());
+		getCommand("vanish").setExecutor(new VanishCommand());
 	}
 
 	/**

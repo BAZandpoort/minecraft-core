@@ -1,7 +1,9 @@
 package com.cedricverlinden.bazandpoort.commands.player;
 
 import com.cedricverlinden.bazandpoort.conversations.lectures.computerscience.ComputerScienceConvo;
+import com.cedricverlinden.bazandpoort.conversations.lectures.economy.EconomyConvo;
 import com.cedricverlinden.bazandpoort.conversations.lectures.math.MathConvo;
+import com.cedricverlinden.bazandpoort.conversations.lectures.science.ScienceConvo;
 import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ChatUtil;
 import org.bukkit.command.Command;
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LectureCommand implements CommandExecutor, TabCompleter {
+public class OefeningCommand implements CommandExecutor, TabCompleter {
 
 	PlayerManager playerManager;
 
@@ -30,18 +32,18 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 		playerManager = PlayerManager.getPlayer(player);
 
 		if (playerManager == null) {
-			player.sendMessage(ChatUtil.color((player.isOp() ? "You shouldn't be able to use this command anyway.": "You first have to register.")));
+			player.sendMessage(ChatUtil.color((player.isOp() ? "You shouldn't be able to use this command anyway. LOL": "Je moet je eerst registreren.")));
 			return true;
 		}
 
 
 		if (playerManager.getCurrentRegion().equals("Hallways")) {
-			player.sendMessage(ChatUtil.color("&cYou have to be in a class to start a lecture."));
+			player.sendMessage(ChatUtil.color("&cJe moet je in een klas begeven om een oefening te starten."));
 			return true;
 		}
 
 		if (args.length == 0) {
-			player.sendMessage(ChatUtil.color("&cUsage: /lecture <start, end>"));
+			player.sendMessage(ChatUtil.color("&cGebruik: /lecture <start>"));
 			return true;
 		}
 
@@ -49,34 +51,34 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 
 		if ("start".equals(param)) {
 			if (!(playerManager.getCurrentLecture().equals("Exploring"))) {
-				player.sendMessage(ChatUtil.color("&cYou have already started a lecture."));
+				player.sendMessage(ChatUtil.color("&cJe bent al begonnen met een oefening."));
 				return true;
 			}
 
 			switch (playerManager.getCurrentRegion()) {
-				case "economy" -> player.sendMessage(ChatUtil.color("ECONOMY -> WIP"));
+				case "economy" -> new EconomyConvo(player).begin();
 				case "computerscience" -> new ComputerScienceConvo(player).begin();
-				case "science" -> player.sendMessage(ChatUtil.color("SCIENCE -> WIP"));
+				case "science" -> new ScienceConvo(player).begin();
 				case "math" -> new MathConvo(player).begin();
-				default -> player.sendMessage(ChatUtil.color("You have to be in a class to start a lecture."));
+				default -> player.sendMessage(ChatUtil.color("&cJe moet je in een klas begeven om een oefening te starten."));
 			}
 
 			return true;
 		}
 
-		if ("end".equals(param)) {
-			if (playerManager.getCurrentLecture().equals("Hallways")) {
-				player.sendMessage(ChatUtil.color("&cYou haven't started any lecture yet."));
-				return true;
-			}
+//		if ("end".equals(param)) {
+//			if (playerManager.getCurrentLecture().equals("Hallways")) {
+//				player.sendMessage(ChatUtil.color("&cJe bent nog niet begonnen met een oefening."));
+//				return true;
+//			}
+//
+//			// end conversation
+//			playerManager.setCurrentLecture("Hallways");
+//			player.sendMessage(ChatUtil.color("&cEnding the lecture..."));
+//			return true;
+//		}
 
-			// end conversation
-			playerManager.setCurrentLecture("Hallways");
-			player.sendMessage(ChatUtil.color("&cEnding the lecture..."));
-			return true;
-		}
-
-		player.sendMessage(ChatUtil.color("&cUsage: /lecture <start, end>"));
+		player.sendMessage(ChatUtil.color("&cUsage: /lecture start"));
 		return true;
 	}
 
@@ -90,7 +92,7 @@ public class LectureCommand implements CommandExecutor, TabCompleter {
 		ArrayList<String> completions = new ArrayList<>();
 
 		if (args.length == 1) {
-			completions.addAll(List.of("start", "stop"));
+			completions.add("start");
 		}
 
 		return completions;
