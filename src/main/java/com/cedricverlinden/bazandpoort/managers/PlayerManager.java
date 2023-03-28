@@ -2,6 +2,7 @@ package com.cedricverlinden.bazandpoort.managers;
 
 import com.cedricverlinden.bazandpoort.Core;
 import com.cedricverlinden.bazandpoort.database.Database;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -104,6 +105,8 @@ public class PlayerManager {
 	// Setter
 	public void setCustomName(String customName) {
 		this.customName = customName;
+		this.player.playerListName(Component.text(customName + " | Leeftijd: " + age + "jr."));
+		this.player.displayName(Component.text(customName));
 
 		String sql = "UPDATE players SET customname=? WHERE playername=?;";
 		try (PreparedStatement statement = database.run(sql)) {
@@ -117,6 +120,7 @@ public class PlayerManager {
 
 	public void setAge(int age) {
 		this.age = age;
+		this.player.playerListName(Component.text(customName + " | Leeftijd: " + age + "jr."));
 
 		String sql = "UPDATE players SET age=? WHERE playername=?;";
 		try (PreparedStatement statement = database.run(sql)) {
@@ -155,8 +159,8 @@ public class PlayerManager {
 	}
 
 	private void createPlayer() {
-		String sql = "INSERT INTO players(id, playername, customname, age, currentregion, currentlecture) " +
-				"VALUES (default,?,?,?,?,?);";
+		String sql = "INSERT INTO players(playername, customname, age, currentregion, currentlecture) " +
+				"VALUES (?,?,?,?,?);";
 		try (PreparedStatement statement = database.run(sql)) {
 			statement.setString(1, playerName);
 			statement.setString(2, customName);
@@ -171,6 +175,7 @@ public class PlayerManager {
 
 	// Other
 	public void resetPlayer() {
+		playerList.remove(getPlayer(player));
 		String sql = "DELETE FROM players WHERE playername=?;";
 
 		try (PreparedStatement statement = database.run(sql)) {
@@ -179,5 +184,9 @@ public class PlayerManager {
 		} catch (SQLException exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	public void resetAll() {
+		playerList.remove(getPlayer(player));
 	}
 }

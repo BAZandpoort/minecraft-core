@@ -1,5 +1,6 @@
 package com.cedricverlinden.bazandpoort.database;
 
+import com.cedricverlinden.bazandpoort.managers.PlayerManager;
 import com.cedricverlinden.bazandpoort.utils.ErrorUtil;
 import com.cedricverlinden.bazandpoort.utils.LoggerUtil;
 
@@ -17,10 +18,11 @@ public class Database {
 	 */
 	public Database() {
 		try {
-			String HOST = "lin-17544-10111-mysql-primary.servers.linodedb.net"; // 127.0.0.1
-			String DATABASE = "minecraft"; // minecraft
-			String USERNAME = "root"; // root
-			String PASSWORD = "Fruitsla!123"; // Fruitsla!123
+			String HOST = "localhost";
+			String DATABASE = "minecraft";
+			String USERNAME = "root";
+			String PASSWORD = "";
+			System.out.println(HOST);
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://" + HOST + ":3306/" + DATABASE + "?useSSL=false", USERNAME, PASSWORD);
 

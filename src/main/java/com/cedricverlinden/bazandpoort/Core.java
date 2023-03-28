@@ -16,8 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Core extends JavaPlugin {
 
-	// TODO: Add questions for every lecture, add existing players to local data, config getters for easy access, more commands (?)
-
 	private static Core core;
 	private static Start instance;
 

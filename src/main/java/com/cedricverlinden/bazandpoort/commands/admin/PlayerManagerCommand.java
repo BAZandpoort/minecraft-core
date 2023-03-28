@@ -19,6 +19,7 @@ import java.util.List;
 public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 
 	private final Database database = Core.instance().database();
+	PlayerManager playerManager;
 
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -46,7 +47,7 @@ public class PlayerManagerCommand implements CommandExecutor, TabCompleter {
 			return true;
 		}
 
-		PlayerManager playerManager = PlayerManager.getPlayer(player);
+		playerManager = PlayerManager.getPlayer(target);
 		if (playerManager == null) {
 			player.sendMessage(ChatUtil.color("&cDeze speler heeft nog geen profiel aangemaakt."));
 			return true;
