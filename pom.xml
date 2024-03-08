@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.github.NetzkroneHD</groupId>
             <artifactId>WGRegionEvents</artifactId>
-            <version>v1.7.3</version>
+            <version>v1.7.4</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
